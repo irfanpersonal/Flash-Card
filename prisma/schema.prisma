@@ -1,0 +1,96 @@
+// The "schema.prisma" file is where you define all the settings for the database. So you can do things like 
+// define models, your database connection password, and what the prisma code should be converted into.
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+// In order to create a model aka table simply use the model keyword followed by a model name and curly braces. So like this
+// model ModelName {
+// 
+// }
+
+model User {
+    // A model is made up of 4 things, but only 2 of them are required
+    // The required two are Column Name and Column Type
+    // The optional two are Field Type Modifier and Attributes
+    // Note: The 2 main Field Type Modifiers are: ? (making the column optional) and [](an array of that thing)
+    // Generally you'll see all 4 of these things work like this
+    // Column Name | Column Type | Field Type Modifier | Attribute/s (anything that starts with an @)
+    id        String   @id @default(uuid())
+    // id - Column Name, String - Column Type, @id - Attribute, @default(uuid()) - Attribute 
+    name      String   @unique
+    // name - Column Name, String - Column Type, @unique - Attribute
+    email     String   @unique
+    // email - Column Name, String - Column Type, @unique - Attribute
+    password  String
+    // password - Column Name, String - Column Type
+    country   String
+    // country - Column Name, String - Column Type
+    birthday  DateTime
+    // birthda - Column Name, DateTime - Column Type
+    packs     Pack[]
+    // Here I am saying that a User has many packs 
+    cards     Card[]
+    // Here I am saying that a User has many cards
+    createdAt DateTime @default(now())
+    // createdAt - Column Name, DateTime - Column Type, @default - Attribute
+    updatedAt DateTime @updatedAt
+    // updatedAt - Column Name, DateTime - Column Type, @updatedAt - Attribute
+}
+
+model Pack {
+    id        String   @id @default(uuid())
+    name      String
+    // Here I am saying that I want to define a foreign key on the column "userId" and that it is referencing the 
+    // primary key id from the table User.
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    cards     Card[]
+    createdAt DateTime @default(now())
+    // createdAt - Column Name, DateTime - Column Type, @default - Attribute
+    updatedAt DateTime @updatedAt
+    // updatedAt - Column Name, DateTime - Column Type, @updatedAt - Attribute
+}
+
+model Card {
+    id        String   @id @default(uuid())
+    name      String
+    content   String
+    // Here I am saying that I want to define a foreign key on the column "packId" and that it is referencing the
+    // primary key id from the table Pack.
+    pack      Pack     @relation(fields: [packId], references: [id])
+    packId    String
+    // Here I am saying that I want to define a foreign key on the column "packId" and that it is referencing the
+    // primary key id from the table Pack.
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    createdAt DateTime @default(now())
+    // createdAt - Column Name, DateTime - Column Type, @default - Attribute
+    updatedAt DateTime @updatedAt
+    // updatedAt - Column Name, DateTime - Column Type, @updatedAt - Attribute
+}
+
+// To populate the referenced data simply pass in the property to the include. 
+// include: {
+//     property: true
+// }
+
+// To limit the amount of returned results for your query
+// take: number
+
+// To skip a certain amount of returned results for your query
+// skip: number
+
+// To order the results in a certain way
+// orderBy: {
+//     age: 'desc' | 'asc'
+// }
+
+// Note: Prisma does not support built in minimum or maximum attributes or middleware functions like 
+// BeforeSave, AfterSave etc. So you have to do that by yourself in the controllers. Very unfortunate.
