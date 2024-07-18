@@ -4,8 +4,8 @@ The Flash Card application facilitates the organization of study materials into 
 
 ## Technologies Used
 
-- [NextJS] (https://nextjs.org/): The React framework for production.
-- [Prisma] (https://www.prisma.io/): A modern ORM for TypeScript and Node.js, making database access easy with type safety and auto-generated queries.
+- [NextJS](https://nextjs.org/): The React framework for production.
+- [Prisma](https://www.prisma.io/): A modern ORM for TypeScript and Node.js, making database access easy with type safety and auto-generated queries.
 - [TypeScript](https://www.typescriptlang.org/): A powerful and flexible superset of JavaScript, bringing static typing to your projects.
 - [MySQL](https://www.mysql.com/): An open-source relational database management system.
 
