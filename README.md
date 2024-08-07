@@ -1,4 +1,4 @@
-# Flash Card (SERN)
+# Flash Card
 
 The Flash Card application facilitates the organization of study materials into packs and cards. Users can categorize different topics using packs and provide detailed explanations through cards within each topic section. This structure enhances study efficiency by systematically breaking down and explaining various subjects.
 
